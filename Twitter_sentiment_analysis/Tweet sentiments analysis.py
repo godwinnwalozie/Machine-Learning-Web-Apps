@@ -49,8 +49,8 @@ div.stButton > button:hover {
 
 @st.cache(suppress_st_warning=True, allow_output_mutation=True, persist= True)
 def load_model():
-    model = pickle.load(open("/home/mazi/Data_Science_ML/Streamlit Machine Learning Apps/pages/model_twitter.pkl", "rb"))
-    data = pd.read_csv("/home/mazi/Data_Science_ML/Streamlit Machine Learning Apps/pages/twitter_cleaned.csv", usecols=[0,1,2])
+    model = pickle.load(open(r"C:\Users\godwi\Data_Science_ML\Machine-Learning-Web-Apps\Twitter_sentiment_analysis\model_twitter.pkl", "rb"))
+    data = pd.read_csv(r"C:\Users\godwi\Data_Science_ML\Machine-Learning-Web-Apps\Twitter_sentiment_analysis\twitter_cleaned.csv", usecols=[0,1,2])
     return model, data
 
 model,data = load_model()
@@ -62,11 +62,11 @@ model_load, dataset = model, data
 
 with st.container():
     st.title(" 𝐓𝐰𝐢𝐭𝐭𝐞𝐫 - 𝐒𝐞𝐧𝐭𝐢𝐦𝐞𝐧𝐭𝐬 𝐀𝐧𝐚𝐥𝐲𝐬𝐢𝐬 𝐨𝐟 𝐓𝐰𝐞𝐞𝐭𝐬")
-    st.write("#### by Godwin Nwalozie")
-    st.subheader( " ***Negative 👎 Neutral😐 Positive 👍***") 
+    st.write(" by Godwin Nwalozie")
+    st.subheader( " Negative 👎 Neutral😐 Positive 👍") 
     
    
-st.info(""" ##### This type of model can help the customer success or product teams to ascertain if the product \
+st.info("""  This type of model can help the customer success or product teams to ascertain if the product \
     is doing well, or if there areas clients are not happy about, such as price, quality and so on\
         sevices , if the feedbacks are are positive, negative, or neutral""")
 
@@ -84,19 +84,19 @@ with st.container():
 
         st.markdown("")
         with st.container():
-            st.subheader("***Enter a sample product review to test model***")
-
-            tweet = st.text_input('Movie title', 'The product is not the best in the market ') 
+            st.subheader("Enter a sample product review to test model")
+            tweet = st.text_input('Enter a review or a tweet', 'I will never fly this airline ') 
 
             if st.button('click to make a prediction 👈'):
                 if tweet == "" :
                     counter = len(tweet)  
                     st.markdown(f" character counter: {counter}")
-                    st.error(" ##### ...no do mago mago, 😀 input some text")
-                    
-                    
+                    st.error(" ##### ...empty ! 😀 input some text")
+                                      
                 elif len(tweet) < 30:
-                    st.error(" #####  😔 you too like mago mago ,enter more chracter")
+                    st.error(" #####  😔 enter more characters")
+                    counter = len(tweet)  
+                    st.markdown(f" character counter: {counter}")
                 
                 else:
                     probab = model_load.predict_proba([tweet])
@@ -132,7 +132,7 @@ with col2:
         fig, ax = plt.subplots() 
         super = dataset.loc[:,["tweets","airline_sentiment"]]
         text = "".join(super[super.airline_sentiment == "positive"].tweets)
-        wc= WordCloud(max_words = 3000,background_color = "black").generate(text)
+        wc= WordCloud(max_words = 5000,background_color = "black").generate(text)
         ax.imshow(wc,interpolation='bilinear')
         plt.title("most occuring positive words", fontsize = 13)
         plt.axis("off")
@@ -145,7 +145,7 @@ with col2:
         fig, ax = plt.subplots() 
         super = dataset.loc[:,["tweets","airline_sentiment"]]
         text = "".join(super[super.airline_sentiment == "negative"].tweets)
-        wc= WordCloud(max_words = 3000,background_color = "black").generate(text)
+        wc= WordCloud(max_words = 5000,background_color = "black").generate(text)
         ax.imshow(wc,interpolation='bilinear')
         plt.title("most occuring negative words", fontsize = 13)
         plt.axis("off")
