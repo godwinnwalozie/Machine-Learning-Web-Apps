@@ -11,6 +11,7 @@ import seaborn as sns
 plt.style.use('seaborn-ticks')
 
 
+
 st.set_page_config(layout="wide")
 
 # Remove whitespace from the top of the page and sidebar
@@ -85,7 +86,7 @@ with st.container():
         with st.container():
             st.subheader("***Enter a sample product review to test model***")
 
-            tweet = st.text_input('Movie title', 'The attendant was very rude ') 
+            tweet = st.text_input('Movie title', 'The product is not the best in the market ') 
 
             if st.button('click to make a prediction 👈'):
                 if tweet == "" :
@@ -94,9 +95,7 @@ with st.container():
                     st.error(" ##### ...no do mago mago, 😀 input some text")
                     
                     
-                elif len(tweet) < 25:
-                    counter = len(tweet)  
-                    st.markdown(f" character counter: {counter}")
+                elif len(tweet) < 30:
                     st.error(" #####  😔 you too like mago mago ,enter more chracter")
                 
                 else:
@@ -114,8 +113,6 @@ with st.container():
                     st.write(f" #### {prediction} ")
                     st.write(f" ##### Negative @ {probab_neg *100}%   Neutral @{probab_neut*100}%  Positive @ {probab_pos*100}% ")
                   
-
-
                     
 
 with col2:
@@ -135,7 +132,7 @@ with col2:
         fig, ax = plt.subplots() 
         super = dataset.loc[:,["tweets","airline_sentiment"]]
         text = "".join(super[super.airline_sentiment == "positive"].tweets)
-        wc= WordCloud(max_words = 4000,background_color = "black").generate(text)
+        wc= WordCloud(max_words = 3000,background_color = "black").generate(text)
         ax.imshow(wc,interpolation='bilinear')
         plt.title("most occuring positive words", fontsize = 13)
         plt.axis("off")
@@ -148,7 +145,7 @@ with col2:
         fig, ax = plt.subplots() 
         super = dataset.loc[:,["tweets","airline_sentiment"]]
         text = "".join(super[super.airline_sentiment == "negative"].tweets)
-        wc= WordCloud(max_words = 4000,background_color = "black").generate(text)
+        wc= WordCloud(max_words = 3000,background_color = "black").generate(text)
         ax.imshow(wc,interpolation='bilinear')
         plt.title("most occuring negative words", fontsize = 13)
         plt.axis("off")
