@@ -89,7 +89,7 @@ with col2:
 The detection of diabetes is a further crucial aspect of using BMI.
 According to research, having a high BMI level has a significant impact on the disease's development, and maintaining a healthy BMI could slow or even stop the disease's progression. """)
              
-    image_header = Image.open("/home/mazi/Data_Science_ML/Streamlit Machine Learning Apps/img/diagram.jpg")
+    image_header = Image.open("/home/mazi/Data_Science_ML/Machine-Learning-Web-Apps/simple_bmi_calculator/diagram.jpg")
     st.image(image_header) 
 
 kaggle=' 🔍Find me on Linkedin [link](https://www.linkedin.com/in/godwinnwalozie/)'
