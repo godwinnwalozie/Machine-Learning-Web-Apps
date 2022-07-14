@@ -10,7 +10,8 @@ import pickle
 from PIL import Image
 import os
 import time
-import base64
+plt.style.use('seaborn-ticks')
+
 
 
 
@@ -22,17 +23,17 @@ st.set_page_config(layout="wide")
 st.markdown("""
         <style>
                .css-18e3th9 {
-                    padding-top: 1rem;
+                    padding-top: 3rem;
                     padding-bottom: 5rem;
                 }
-               .css-wjbhl0 {
-                    padding-top: 3rem;
+               .css-hxt7ib {
+                    padding-top: 1rem;
                     padding-bottom: 1rem;
                 }
                 .css-zx8yrj {
                     border: double;
                     border-color: black;
-                    background-color: black;
+                    background-color: white;
                 }
                 .css-1frylpx {
                 color: #ffffff;
@@ -58,12 +59,24 @@ div.stButton > button:hover {
 </style>""", unsafe_allow_html=True)
 
 
-# get dir name
+# get dir name os path
 dir_name = os.path.abspath(os.path.dirname(__file__))
 
+
+# path = os.path.dirname(__file__)
+# my_file = path+'\stroke_train.csv'
+# st.write(pd.read_csv(my_file))
+
 # Loading and caching Our dataset
+
+file = Image.open(os.path.join(dir_name,"stroke_app_title_image-bg.png"))
+st.image(file )
+st.caption("### by Godwin Nwalozie")
+
+
 @st.cache(suppress_st_warning=True, allow_output_mutation=True, persist= True)
 def load_files():
+    
     dataset = pd.read_csv(os.path.join(dir_name, 'stroke_train.csv'))
     cf = pd.read_csv(os.path.join(dir_name, 'confusion_matrix_dataframe.csv'))
     cmax= cf.rename({"no":0, "yes" : 1}, axis =1 )
@@ -75,23 +88,14 @@ dataset, cmax, model = load_files()
 master_df, conf_max_df, stroke_model = dataset, cmax, model
 
 
-
-
 def main():
-    # Title header "
-    st.title(" 𝐒𝐭𝐫𝐨𝐤𝐞 𝐃𝐢𝐬𝐞𝐚𝐬𝐞 𝐏𝐫𝐞𝐝𝐢𝐜𝐭𝐢𝐨𝐧 - 𝐌𝐚𝐜𝐡𝐢𝐧𝐞 𝐋𝐞𝐚𝐫𝐧𝐢𝐧𝐠") 
-  
- 
-    st.info(" ##### by Godwin Nwalozie")
-    st.markdown("")
-     
+        
     #with st.expander(" Expand to view detaild About this Model"):
     
     
         # Title message about stroke
     
-    st.markdown(""" This machine learning model predicts the likelihood of a stroke disease based on historical data from patients.
-    This is very critical in the early detection of causative factors, the treatment and avoidance of fatal conditions.""")
+    st.info(""" ##### This machine learning model predicts the likelihood of a stroke disease based on historical data from patients.This is very critical in the early detection of causative factors, for treatment and prevention of fatal conditions.""")
     
     
 
@@ -100,11 +104,11 @@ def main():
         row_count = len(master_df ) 
         col_count_ini = len(master_df .columns)
         col_count = len(master_df .columns)-3
-        st.markdown("<h4 style='text-align: left; color: gold;'> Details of the trained dataset 📊 </h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: left; color: brown;'> Details of the trained dataset 📊 </h4>", unsafe_allow_html=True)
 
         col1, col2, col3 = st.columns(3)
         col1.metric("Number of rows", row_count, "")
-        col2.metric("Estimator","RFClassifier", "")
+        col2.metric("Estimator","RandomForest", "")
         col3.metric("Prediction Accuracy", "92%", "")
 
 
@@ -129,19 +133,19 @@ def main():
             "avg_glucose_level" : avg_glucose_level, "bmi" : bmi,"smoking_status": smoking_status }  
     
 
-    st.markdown("<h4 style='text-align: left; color:gold;'> Your selected features (important you enter all values) 📝 </h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: left; color:brown;'> Your selected features (important you enter all values) 📝 </h4>", unsafe_allow_html=True)
 
    
     
     frame =  pd.DataFrame(input, index = [0])
-    st.write(frame.style.format({'age': '{:.0f}', 'avg_glucose_level': '{:.2f}', 'bmi': '{:.2f}'}))
+    st.table(frame.style.format({'age': '{:.0f}', 'avg_glucose_level': '{:.2f}', 'bmi': '{:.2f}'}))
     
     
     with st.container():
         
         
         
-        if st.button('click here to predict love 👈'):
+        if st.button('make prediction 👈'):
             if gender == "" or hypertension =="" or heart_disease == "" or ever_married == "" or work_type == "" or smoking_status == "":
                 st.error(" ##### ⚠️ Mazi says you still have some missing input")
             else:
@@ -174,8 +178,10 @@ def main():
         st.markdown("***")
         st.subheader("Exploratory Data Analysis")
         st.markdown (f""" 
-            * You observe from the charts that stroke is predominant amongst age category 45 years and above
-            * More females with stroke """)
+            * Stroke disease is predominant amongst age category 45 years and above
+            * High bmi might lead to stroke especially age 45+
+            * More females with stroke (dependends on the data and distribution)
+            * Positive coreelation between heart disease and hypertension""")
 
 
         # chart for confusion metrix   
