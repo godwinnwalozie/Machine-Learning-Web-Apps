@@ -1,5 +1,6 @@
 # core libraries
 from pyexpat import features
+import joblib
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -81,7 +82,7 @@ def load_files():
     
     dataset = pd.read_csv(os.path.join(dir_name, 'stroke_train.csv'))
     cf = pd.read_csv(os.path.join(dir_name, 'confusion_matrix_dataframe.csv'))
-    model = pickle.load(open(os.path.join(dir_name,'model_stroke.pkl'),"rb" ))
+    model = joblib.load(os.path.join(dir_name,"model_stroke.joblib"))
     return dataset, cf, model
 dataset, cfmax, model = load_files()
 
