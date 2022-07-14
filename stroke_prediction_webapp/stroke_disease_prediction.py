@@ -58,15 +58,18 @@ div.stButton > button:hover {
 </style>""", unsafe_allow_html=True)
 
 
+# get dir name
+dir_name = os.path.abspath(os.path.dirname(__file__))
+
 # Loading and caching Our dataset
 @st.cache(suppress_st_warning=True, allow_output_mutation=True, persist= True)
 def load_files():
-    dataset= pd.read_csv(r"C:\Users\godwi\Data_Science_ML\Machine-Learning-Web-Apps\stroke_prediction_webapp\stroke_train.csv")
-    cf = pd.read_csv(r"C:\Users\godwi\Data_Science_ML\Machine-Learning-Web-Apps\stroke_prediction_webapp\confusion_matrix_dataframe.csv")
+    dataset = pd.read_csv(os.path.join(dir_name, 'stroke_train.csv'))
+    cf = pd.read_csv(os.path.join(dir_name, 'confusion_matrix_dataframe.csv'))
     cmax= cf.rename({"no":0, "yes" : 1}, axis =1 )
-    model = pickle.load(open(r"C:\Users\godwi\Data_Science_ML\Machine-Learning-Web-Apps\stroke_prediction_webapp\model_stroke.pkl","rb"))
+    model = pickle.load(open(os.path.join(dir_name,'model_stroke.pkl'),"rb" ))
     return dataset, cmax, model
-dataset, cmax,model = load_files()
+dataset, cmax, model = load_files()
 
 # unpack 
 master_df, conf_max_df, stroke_model = dataset, cmax, model
@@ -97,7 +100,7 @@ def main():
         row_count = len(master_df ) 
         col_count_ini = len(master_df .columns)
         col_count = len(master_df .columns)-3
-        st.markdown("<h4 style='text-align: left; color: brown;'> Details of the trained dataset 📊 </h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: left; color: gold;'> Details of the trained dataset 📊 </h4>", unsafe_allow_html=True)
 
         col1, col2, col3 = st.columns(3)
         col1.metric("Number of rows", row_count, "")
@@ -106,7 +109,7 @@ def main():
 
 
     # collect user input
-    st.sidebar.markdown("<h2 style='text-align:left; color: brown;'> Select Features </h2>",unsafe_allow_html=True)
+    st.sidebar.title('Select Features')
 
     gender = st.sidebar.selectbox('Whats your gender ?',("","Female","Male"))
     age = st.sidebar.number_input('Input Age (Minimun 18 years) ', key = 'int',max_value  =100,min_value = 18)
@@ -126,7 +129,7 @@ def main():
             "avg_glucose_level" : avg_glucose_level, "bmi" : bmi,"smoking_status": smoking_status }  
     
 
-    st.markdown("<h4 style='text-align: left; color:brown;'> Your selected features (important you enter all values) 📝 </h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: left; color:gold;'> Your selected features (important you enter all values) 📝 </h4>", unsafe_allow_html=True)
 
    
     
