@@ -104,7 +104,7 @@ def main():
         row_count = len(master_df ) 
         col_count_ini = len(master_df .columns)
         col_count = len(master_df .columns)-3
-        st.markdown("<h4 style='text-align: left; color: brown;'> Details of the trained dataset 📊 </h4>", unsafe_allow_html=True)
+        st.markdown("<h4 style='text-align: left; color: brown;'> Model estimator and score 📊 </h4>", unsafe_allow_html=True)
 
         col1, col2, col3 = st.columns(3)
         col1.metric("Number of rows", row_count, "")
@@ -121,7 +121,7 @@ def main():
     heart_disease = st.sidebar.selectbox('Any heart related disease ? ',("","Yes", "No"))
     ever_married= st.sidebar.selectbox('Ever married ?', ("","Yes" ,"No"))
     work_type = st.sidebar.selectbox('Work type ?', ("","Private","Self-employed","children","Govt_job","Never_worked"))
-    avg_glucose_level= st.sidebar.number_input('Average Gloucose Level', min_value= 0.0 , max_value=350.0)
+    avg_glucose_level= st.sidebar.number_input('Avg gloucose level in blood stream(mg/dL)', min_value= 0.0 , max_value=350.0)
     bmi = st.sidebar.number_input('Enter your current BMI', min_value= 0.0, max_value= 100.0)
     smoking_status = st.sidebar.selectbox('Smoking status',("","never smoked" , "formerly smoked", "smokes"))
     st.sidebar.markdown("") 
@@ -133,7 +133,7 @@ def main():
             "avg_glucose_level" : avg_glucose_level, "bmi" : bmi,"smoking_status": smoking_status }  
     
 
-    st.markdown("<h4 style='text-align: left; color:brown;'> Your selected features (important you enter all values) 📝 </h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: left; color:brown;'> Features selected 📝 </h4>", unsafe_allow_html=True)
 
    
     
