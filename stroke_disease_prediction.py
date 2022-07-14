@@ -61,7 +61,7 @@ div.stButton > button:hover {
 
 # get dir name os path
 dir_name = os.path.abspath(os.path.dirname(__file__))
-
+st.write(dir_name)
 
 # path = os.path.dirname(__file__)
 # my_file = path+'\stroke_train.csv'
