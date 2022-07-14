@@ -79,10 +79,9 @@ def load_files():
     
     dataset = pd.read_csv(os.path.join(dir_name, 'stroke_train.csv'))
     cf = pd.read_csv(os.path.join(dir_name, 'confusion_matrix_dataframe.csv'))
-    cmax= cf.rename({"no":0, "yes" : 1}, axis =1 )
     model = pickle.load(open(os.path.join(dir_name,'model_stroke.pkl'),"rb" ))
-    return dataset, cmax, model
-dataset, cmax, model = load_files()
+    return dataset, cf, model
+dataset, cfmax, model = load_files()
 
 # unpack 
 master_df, conf_max_df, stroke_model = dataset, cmax, model
