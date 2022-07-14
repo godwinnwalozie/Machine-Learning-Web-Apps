@@ -12,7 +12,17 @@ from PIL import Image
 import os
 from imblearn.pipeline import Pipeline as imbPipeline
 import time
-plt.style.use('seaborn-ticks')
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import SMOTE 
+from imblearn.pipeline import Pipeline as imbPipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+
+
 
 
 
@@ -185,7 +195,7 @@ with st.container():
         * More females with stroke (dependends on the data and distribution)
         * Positive coreelation between heart disease and hypertension""")
 
-
+    plt.style.use('seaborn-ticks')
     # chart for confusion metrix   
     sns.set_theme(font_scale=0.84)
     col1, col2 = st.columns(2)
