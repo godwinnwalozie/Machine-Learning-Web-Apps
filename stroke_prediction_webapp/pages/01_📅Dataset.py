@@ -33,11 +33,11 @@ st.markdown("""
 m = st.markdown("""
 <style>
 div.stButton > button:first-child {
-    background-color: teal;
-    color:#ffffff;
+    background-color: white;
+    color:blue;
 }
 div.stButton > button:hover {
-    background-color: #0066FF;
+    background-color: #white;
     color:#fffff;
     }
 </style>""", unsafe_allow_html=True)
@@ -59,7 +59,9 @@ with st.container():
     row_count = len(data ) 
     col_count = len(data.columns)
     col_count = len(data.columns)
-    st.title("Details of training dataset")
+    
+    
+    st.title("Details of trained dataset")
     st.caption(" ### Data Source : https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset")
 
     col1, col2, col3 = st.columns(3)
@@ -67,9 +69,8 @@ with st.container():
     col2.metric("Number of columns",col_count, "")
 
 
-if st.button('click to randomize 5 rows '): 
+if st.button('👇 click to randomize 5 rows '): 
     random.random()
             
 st.header("Dataset")
 st.write(data.sample(5))
-

@@ -49,12 +49,12 @@ st.markdown("""
 m = st.markdown("""
 <style>
 div.stButton > button:first-child {
-    background-color: teal;
-    color:#ffffff;
+    background-color:dimgray;
+    color:white;
 }
 div.stButton > button:hover {
-    background-color: #0066FF;
-    color:#fffff;
+    background-color: white;
+    color:blue;
     }
 </style>""", unsafe_allow_html=True)
 
@@ -95,7 +95,7 @@ def main():
     
         # Title message about stroke
     
-    st.info(""" ##### This machine learning model predicts the likelihood of a stroke disease based on historical data from patients.This is very critical in the early detection of causative factors, for treatment and prevention of fatal conditions.""")
+    st.info(""" ##### This machine learning model predicts the likelihood of a stroke disease based on historical data from patients, which is very critical in the early detection of causative factors, for treatment and prevention of fatal conditions.""")
     
     
 
@@ -145,7 +145,7 @@ def main():
         
         
         
-        if st.button('make prediction 👈'):
+        if st.button('👇 click to make prediction'):
             if gender == "" or hypertension =="" or heart_disease == "" or ever_married == "" or work_type == "" or smoking_status == "":
                 st.error(" ##### ⚠️ Mazi says you still have some missing input")
             else:
