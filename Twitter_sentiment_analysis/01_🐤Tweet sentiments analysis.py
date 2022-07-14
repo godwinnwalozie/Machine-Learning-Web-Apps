@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import joblib
 import pickle
+# import scipy
 from wordcloud import WordCloud
 import seaborn as sns
 plt.style.use('seaborn-ticks')

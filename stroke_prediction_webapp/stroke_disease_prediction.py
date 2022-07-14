@@ -61,10 +61,10 @@ div.stButton > button:hover {
 # Loading and caching Our dataset
 @st.cache(suppress_st_warning=True, allow_output_mutation=True, persist= True)
 def load_files():
-    dataset= pd.read_csv("/home/mazi/Data_Science_ML/Streamlit Machine Learning Apps/pages/stroke_train.csv")
-    cf = pd.read_csv("/home/mazi/Data_Science_ML/Streamlit Machine Learning Apps/pages/confusion_matrix_dataframe.csv")
+    dataset= pd.read_csv(r"C:\Users\godwi\Data_Science_ML\Machine-Learning-Web-Apps\stroke_prediction_webapp\stroke_train.csv")
+    cf = pd.read_csv(r"C:\Users\godwi\Data_Science_ML\Machine-Learning-Web-Apps\stroke_prediction_webapp\confusion_matrix_dataframe.csv")
     cmax= cf.rename({"no":0, "yes" : 1}, axis =1 )
-    model = pickle.load(open("/home/mazi/Data_Science_ML/Streamlit Machine Learning Apps/pages/model_stroke.pkl","rb"))
+    model = pickle.load(open(r"C:\Users\godwi\Data_Science_ML\Machine-Learning-Web-Apps\stroke_prediction_webapp\model_stroke.pkl","rb"))
     return dataset, cmax, model
 dataset, cmax,model = load_files()
 
