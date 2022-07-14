@@ -82,14 +82,16 @@ dir_name = os.path.abspath(os.path.dirname(__file__))
 
 # Loading and caching Our dataset
 
+
+
 file = Image.open(os.path.join(dir_name,"stroke_app_title_image-bg.png"))
 st.image(file )
 st.caption("### by Godwin Nwalozie")
 
 
+
 @st.cache(suppress_st_warning=True, allow_output_mutation=True, persist= True)
 def load_files():
-    
     dataset = pd.read_csv(os.path.join(dir_name, 'stroke_train.csv'))
     cf = pd.read_csv(os.path.join(dir_name, 'confusion_matrix_dataframe.csv'))
     model = joblib.load(os.path.join(dir_name,"model_stroke.joblib"))
