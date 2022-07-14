@@ -86,7 +86,7 @@ def load_files():
 dataset, cfmax, model = load_files()
 
 # unpack 
-master_df, conf_max_df, stroke_model = dataset, cmax, model
+master_df, conf_max_df, stroke_model = dataset, cfmax, model
 
 
 def main():
@@ -220,15 +220,7 @@ def main():
         
 
 
-            # chart for heart diseaase
-            disease_check = pd.crosstab(master_df.gender, master_df.heart_disease).rename({0: "No", 1:"Yes"}, axis = 1)
-            fig, ax =plt.subplots(figsize = (9,4))
-            #disease_check.plot( kind = 'bar', color = ('teal',"blueviolet"), ax=ax)
-            sns.heatmap(data = disease_check, annot = True, fmt ="2d", cmap="Reds",linewidths=0.4, linecolor='grey' )
-            ax.set(title ="Heart disease by gender")
-            st.write(fig)     
-                
-            
+           
      
 
     with col2:
@@ -267,20 +259,19 @@ def main():
         age_category = age_category()
         st.write(age_category)
         
-        
-        
-        
+         # chart for heart diseaase
+        disease_check = pd.crosstab(master_df.gender, master_df.heart_disease).rename({0: "No", 1:"Yes"}, axis = 1)
+        fig, ax =plt.subplots(figsize = (9,4))
+        #disease_check.plot( kind = 'bar', color = ('teal',"blueviolet"), ax=ax)
+        sns.heatmap(data = disease_check, annot = True, fmt ="2d", cmap="Reds",linewidths=0.4, linecolor='grey' )
+        ax.set(title ="Heart disease by gender")
+        st.write(fig)     
             
-        #Feature correlation
-        st.cache(hash_funcs={matplotlib.figure.Figure: lambda _: None})
-        def corr_features ():
-            fig,ax =plt.subplots(figsize = (10,5))
-            feature_check =sns.heatmap(master_df.drop(['id'],axis =1).corr(), cmap="Blues", annot = True, linewidths=0.3,\
-            linecolor='grey', ax = ax, annot_kws={'size': 12})
-            ax.set_title ("Feature Correlation")
-            return fig
-        features = corr_features()
-        st.write(features)
+        
+        
+        
+        
+
 
             
     st.markdown("***")
