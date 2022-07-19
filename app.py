@@ -1,6 +1,4 @@
 # core libraries
-from pyexpat import features
-import joblib
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -9,6 +7,7 @@ import seaborn as sns
 import matplotlib
 from PIL import Image
 import os
+import joblib
 import time
 import plotly.express as px
 from imblearn.over_sampling import SMOTE 
