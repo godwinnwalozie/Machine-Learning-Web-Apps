@@ -1,6 +1,8 @@
 # core libraries
 from pyexpat import features
+from turtle import width
 import joblib
+import plotly
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -10,20 +12,8 @@ import matplotlib
 import pickle
 from PIL import Image
 import os
-from imblearn.pipeline import Pipeline as imbPipeline
 import time
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from imblearn.over_sampling import SMOTE 
-from imblearn.pipeline import Pipeline as imbPipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
-
-
-
+import plotly.express as px
 
 
 
@@ -199,87 +189,85 @@ with st.container():
 
     plt.style.use('seaborn-ticks')
     # chart for confusion metrix   
-    sns.set_theme(font_scale=0.84)
-    col1, col2 = st.columns(2)
-    with col1:
-        
-        @st.cache(hash_funcs={matplotlib.figure.Figure: lambda _: None})
-        def conf_max ():
-            fig,ax = plt.subplots(figsize = (9.5,4))
-            sns.heatmap(conf_max_df ,xticklabels = True, annot =True, ax = ax,linewidths=0.2, \
-            linecolor='grey',fmt = "2d",annot_kws={'size': 10})
-            ax.set_title ("Performance of the trained model - Confusion Matrix (Truth Table)")
-            ax.set_xlabel("Predicted Label",fontsize = 10)
-            ax.set_ylabel("Actual Label",fontsize = 10)
-            ax.tick_params(labelsize=10)
-            return fig              
-        conf_max = conf_max()   
-        st.write(conf_max)             
-                        
-        age_stroke = master_df.loc[:,["gender","stroke"]].groupby("gender").count()
-        fig,(ax) = plt.subplots(figsize = (7,3))
-        sns.barplot(data =age_stroke, y = "stroke", x = age_stroke.index, ax= ax)
-        ax.set(title ="Correlation between glucose level and bmi")
-        ax.set_title ("Marrital Status to having stroke")
-        st.write(fig)
-        
+    
+    
 
-        fig,ax = plt.subplots(figsize = (6,4))
-        sns.regplot(data = master_df, x= "bmi", y= "avg_glucose_level", marker = "*")
-        ax.set(title ="Correlation between glucose level and bmi")
-        st.write(fig)
-        
-        
+col1, col2 = st.columns(2)
+with col1:
+    
+    @st.cache(hash_funcs={matplotlib.figure.Figure: lambda _: None})
+    def conf_max ():
+        cf =conf_max_df.rename({0:"No",1: "Yes"}, axis = 1)
+        cf2 = cf.rename({0:"No",1: "Yes"}, axis = 0)  
+        fig = px.imshow(cf2, text_auto= True, title= "Confusion matrix",aspect="auto", width= 520 )
+        return fig
+    show = conf_max ()
+    st.write(show)
+    
+    st.cache()
+    def gender_stroke ():                
+        gender_stroke = master_df.loc[:,["gender","stroke"]].groupby("gender").count()
+        fig= px.bar(gender_stroke, width=530, title =" stroke disease by gender")
+        return fig
+    gen_stroke = gender_stroke()
+    st.write(gen_stroke)      
 
+    st.cache()
+    def bmi_glu ():
+        fig =px.scatter(master_df, x= "bmi", y= "avg_glucose_level", color = 'stroke', title = "correlation between avg glucose level and bmi")
+        fig.update_layout(autosize=False,width=540, height=500 )
+        return fig
+    bmi_glu = bmi_glu()
+    st.write(bmi_glu)
+    
+    
 
+with col2:
 
-        
-
-
-    with col2:
-
-        #bmi age correlation         
-        st.cache(hash_funcs={matplotlib.figure.Figure: lambda _: None})
-        def age_max ():
-            fig,ax = plt.subplots(figsize = (6,4))
-            sns.scatterplot(data = master_df, x= "bmi", y= "age", hue  = 'stroke')
-            ax.set(title ="Correlation between age and bmi to a stroke")
-            return fig
-        age_bmi = age_max()
-        st.write(age_bmi)
+    #bmi age correlation         
+    st.cache()
+    def bmi_age ():
+        fig = px.scatter( master_df, x= "bmi", y= "age", color = 'stroke')
+        fig.update_layout(width=550,height =450, title = "correlation between bmi and stroke" )
+        return fig
+    bmi_age = bmi_age()
+    st.write(bmi_age)
+    
 
 
-            # Age category Plot
-        st.cache(hash_funcs={matplotlib.figure.Figure: lambda _: None})
-        def age_category():
-            age_hyper = master_df.loc[:,["age","heart_disease"]]
-            age_hyper.heart_disease = age_hyper.heart_disease.apply(lambda x: "Yes" if x == 1 else "No" )
-            age_hyper['age_cat'] = age_hyper.age.apply(lambda x :  "0-2" if 0 <= x<2 else
-                                                "2-5" if 2<= x<= 5 else
-                                                "6-13" if 5< x< 13 else
-                                                "13-18" if 13<= x< 18 else
-                                                "18-30" if 18<= x< 30 else
-                                                "30-40" if 30<= x< 40 else
-                                                "40-50" if 40<= x< 50 else
-                                                "50-65" if 50<= x< 65 else
-                                                "65+" if x>= 65 else "not known")
-            pivot_age = age_hyper.pivot_table(index = 'age_cat', columns='heart_disease', values="age", aggfunc= 'count')
-            fig,ax = plt.subplots(figsize = (6,3))
-            pivot_age.plot(kind = 'bar', ax = ax, fontsize = 8, width=0.4)
-            ax.set_title("Stroke disease by age category (Stroke is observed from 40+ years)", fontsize = 8)
-            plt.legend(fontsize = 7, loc = "upper left")
-            return fig
-        age_category = age_category()
-        st.write(age_category)
 
-            # chart for heart diseaase
+        # Age category Plot
+    st.cache(hash_funcs={matplotlib.figure.Figure: lambda _: None})
+    def age_category():
+        age_hyper = master_df.loc[:,["age","heart_disease"]]
+        age_hyper.heart_disease = age_hyper.heart_disease.apply(lambda x: "Yes" if x == 1 else "No" )
+        age_hyper['age_cat'] = age_hyper.age.apply(lambda x :  "0-2" if 0 <= x<2 else
+                                            "2-5" if 2<= x<= 5 else
+                                            "6-13" if 5< x< 13 else
+                                            "13-18" if 13<= x< 18 else
+                                            "18-30" if 18<= x< 30 else
+                                            "30-40" if 30<= x< 40 else
+                                            "40-50" if 40<= x< 50 else
+                                            "50-65" if 50<= x< 65 else
+                                            "65+" if x>= 65 else "not known")
+        pivot_age = age_hyper.pivot_table(index = 'age_cat', columns='heart_disease', values="age", aggfunc= 'count')
+        fig = px. bar(pivot_age, barmode='group', title = "age distribution with ehart disease " )
+        fig.update_layout(width = 600)
+        return fig
+    age_cat = age_category()
+    st.write(age_cat)
+
+    
+    # chart for heart diseaase
+    st.cache()
+    def heart_gender ():
         disease_check = pd.crosstab(master_df.gender, master_df.heart_disease).rename({0: "No", 1:"Yes"}, axis = 1)
-        fig, ax =plt.subplots(figsize = (9,4))
-        #disease_check.plot( kind = 'bar', color = ('teal',"blueviolet"), ax=ax)
-        sns.heatmap(data = disease_check, annot = True, fmt ="2d", cmap="Reds",linewidths=0.4, linecolor='grey' )
-        ax.set(title ="Heart disease by gender")
-        st.write(fig)     
-            
+        fig = px.imshow(disease_check,text_auto= True)
+        fig.update_layout(width = 550, title = " heart disease by gender")
+        return fig
+    heart_gender = heart_gender()
+    st.write(heart_gender)
+    
 
 
 
