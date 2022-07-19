@@ -52,7 +52,7 @@ st.markdown("""
 m = st.markdown("""
 <style>
 div.stButton > button:first-child {
-    background-color:dimgray;
+    background-color:blue;
     color:white;
 }
 div.stButton > button:hover {
@@ -99,7 +99,7 @@ master_df, conf_max_df, stroke_model = dataset, cfmax, model
 
 # Title message about stroke
 
-st.info(""" ##### This machine learning model predicts the likelihood of a stroke disease based on historical data from patients, which is very critical in the early detection of causative factors, for treatment and prevention of fatal conditions.""")
+st.write(""" This machine learning model predicts the likelihood of a stroke disease based on historical data from patients, which is very critical in the early detection of causative factors, for treatment and prevention of fatal conditions.""")
 
 
 
@@ -142,7 +142,7 @@ st.markdown("<h4 style='text-align: left; color:brown;'> Features selected 📝 
 
 
 frame =  pd.DataFrame(input, index = [0])
-st.table(frame.style.format({'age': '{:.0f}', 'avg_glucose_level': '{:.2f}', 'bmi': '{:.2f}'}))
+st.write(frame.style.format({'age': '{:.0f}', 'avg_glucose_level': '{:.2f}', 'bmi': '{:.2f}'}))
 
 
 with st.container():
@@ -178,18 +178,24 @@ with st.container():
 # st.markdown("***")
     st.markdown(""" ##### Remember prediction is based on the patterns found on the dataset (See charts below) """)
 
+    col1, col2 =st.columns(2)
+    with col1:
+        st.markdown("***")
+        st.subheader("Exploratory Data Analysis")
+        st.markdown (f""" 
+            * Stroke disease is predominant amongst age category 45 years and above
+            * High bmi might lead to stroke especially age 45+
+            * More females with stroke (dependends on the data and distribution)
+            * Positive coreelation between heart disease and hypertension""")
+    with col2:
+        st.markdown("***")
+        st.markdown(""" 
+                    * married people have high bmi
+                    * more females living with heart disease
+                    
+                    """)
 
-    st.markdown("***")
-    st.subheader("Exploratory Data Analysis")
-    st.markdown (f""" 
-        * Stroke disease is predominant amongst age category 45 years and above
-        * High bmi might lead to stroke especially age 45+
-        * More females with stroke (dependends on the data and distribution)
-        * Positive coreelation between heart disease and hypertension""")
-
-    plt.style.use('seaborn-ticks')
     # chart for confusion metrix   
-    
     
 
 col1, col2 = st.columns(2)
@@ -221,7 +227,6 @@ with col1:
     st.write(bmi_glu)
     
     
-
 with col2:
 
     #bmi age correlation         
@@ -234,9 +239,7 @@ with col2:
     st.write(bmi_age)
     
 
-
-
-        # Age category Plot
+    # Age category Plot
     st.cache(hash_funcs={matplotlib.figure.Figure: lambda _: None})
     def age_category():
         age_hyper = master_df.loc[:,["age","heart_disease"]]
@@ -268,12 +271,6 @@ with col2:
     heart_gender = heart_gender()
     st.write(heart_gender)
     
-
-
-
-
-
-
     
 st.markdown("***")
 with st.container():
