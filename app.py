@@ -71,7 +71,7 @@ dir_name = os.path.abspath(os.path.dirname(__file__))
 # Loading and caching Our dataset
 
 
-
+dir_name = os.path.abspath(os.path.dirname(__file__))
 file = Image.open(os.path.join(dir_name,"stroke_app_title_image-bg.png"))
 st.image(file )
 st.caption("### by Godwin Nwalozie")
