@@ -1,6 +1,5 @@
 # core libraries
 from pyexpat import features
-from turtle import width
 import joblib
 import plotly
 import streamlit as st
