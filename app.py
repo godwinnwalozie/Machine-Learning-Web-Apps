@@ -13,6 +13,8 @@ from PIL import Image
 import os
 import time
 import plotly.express as px
+from imblearn.over_sampling import SMOTE 
+from imblearn.pipeline import Pipeline as imbPipeline
 
 
 
