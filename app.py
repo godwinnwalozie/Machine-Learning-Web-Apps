@@ -5,14 +5,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib
-from PIL import Image
+from   PIL import Image
 import os
 import joblib
 import time
 import plotly.express as px
-from imblearn.over_sampling import SMOTE 
-from imblearn.pipeline import Pipeline as imbPipeline
-
+from   imblearn.over_sampling import SMOTE 
+from   imblearn.pipeline import Pipeline as imbPipeline
 
 
 
@@ -41,8 +40,7 @@ st.markdown("""
                 }
                 .css-15490cf{
                    color: #ffffff; 
-                }
-                    
+                }     
         </style>
         """, unsafe_allow_html=True)
 
